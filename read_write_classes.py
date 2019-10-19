@@ -1,7 +1,8 @@
 import csv,sys
+import datetime
 from openpyxl import Workbook
 from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget, QMessageBox
-import datetime
+from broker_classes import BrokerAugust
 
 class OpenFileDialog(QFileDialog):
     """Open a file dialog which lets the user select a file.
@@ -54,23 +55,17 @@ class RelevantData:
 
     def get_relevant_data(self):
 
+        broker = BrokerAugust()
+
         for row in self.old_list:
 
-            # Data for Lyford CSV file
-            # description = row[18].strip()
-            # name = row[19].strip()
-            # symbol = row[24].strip()
-            # date = row[8].strip()
-            # put_call = row[5].strip()
-            # strike = row[7].strip()
+            description = row[broker.description].strip()
+            name = row[broker.name].strip()
+            symbol = row[broker.symbol].strip()
+            date = row[broker.date].strip()
+            put_call = row[broker.put_call].strip()
+            strike = row[broker.strike].strip()
 
-            # Data for August Ice CSV file
-            description = row[6].strip()
-            name = row[7].strip()
-            symbol = row[11].strip()
-            date = row[4].strip()
-            put_call = row[2].strip()
-            strike = row[3].strip()
             self.relevant_data.append([description, name, symbol,
                                        date, put_call, strike])
 
