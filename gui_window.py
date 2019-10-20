@@ -1,11 +1,11 @@
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QGridLayout,
                              QRadioButton, QFileDialog, QMessageBox,
-                             QPushButton)
+                             QPushButton, QLabel)
 from read_write_classes import (TodaysDate, RelevantData,
                                 RowContainer, CSVData, Row, ExcelWriter)
 
-from broker_classes import BrokerAugust
+from broker_classes import BrokerAugust, BrokerAdatmtr
 
 class OpenFileDialog(QFileDialog):
     """Open a file dialog which lets the user select a file.
@@ -21,27 +21,35 @@ class OpenFileDialog(QFileDialog):
 class MainWindow(QWidget):
     def __init__(self):
         QWidget.__init__(self)
+        self.setWindowTitle('ICE Parser')
+        self.setGeometry(200, 300, 300, 200)
         self.layout = QGridLayout()
         self.setLayout(self.layout)
-        self.current_broker = BrokerAugust
+        self.current_broker = BrokerAugust()
+        self.welcome_label()
         self.radio_buttons()
         self.file_search()
         self.broker = None
         self.show()
 
+    def welcome_label(self):
+        label1 = QLabel('Welcome to ICE Parser')
+        label2 = QLabel('Please select a broker and import your csv file')
+        self.layout.addWidget(label1)
+        self.layout.addWidget(label2)
+
+
     def radio_buttons(self):
         # Add a radio button for each broker here
 
-
-        radio_button1 = QRadioButton('Broker 1')
-
+        radio_button1 = QRadioButton('August') # Broker name
+        radio_button1.broker = BrokerAugust() # tells the app which broker class to use
         radio_button1.setChecked(True)
-        radio_button1.broker = BrokerAugust()
         radio_button1.toggled.connect(self.on_toggled)
         self.layout.addWidget(radio_button1)
 
-        radio_button2 = QRadioButton('Broker 2')
-        radio_button2.broker = BrokerAugust()
+        radio_button2 = QRadioButton('Adatmtr')
+        radio_button2.broker = BrokerAdatmtr()
         radio_button2.toggled.connect(self.on_toggled)
         self.layout.addWidget(radio_button2)
 
