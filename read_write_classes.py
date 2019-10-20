@@ -4,33 +4,7 @@ from openpyxl import Workbook
 from PyQt5.QtWidgets import QApplication, QFileDialog, QWidget, QMessageBox
 from broker_classes import BrokerAugust
 
-class OpenFileDialog(QFileDialog):
-    """Open a file dialog which lets the user select a file.
-     The file path is then stored"""
-    def __init__(self):
-        super().__init__()
-        self.filename = self.get_filename()
 
-    def get_filename(self):
-        filename = QFileDialog.getOpenFileName()
-        return filename[0]
-
-
-class ErrorMessage(QWidget):
-    def __init__(self, msg, parent=None):
-        super(ErrorMessage, self).__init__(parent)
-        self.msg = msg
-        self.set_up()
-
-    def set_up(self):
-        err_msg = QMessageBox.warning(self,
-                                  'Error Occurred',
-                                  self.msg,
-                                  QMessageBox.Close,
-                                  QMessageBox.Close)
-        if err_msg == QMessageBox.Close:
-            sys.exit()
-        self.show()
 
 
 class CSVData:
@@ -53,9 +27,9 @@ class RelevantData:
         self.old_list = self.data_obj.data
         self.relevant_data = []
 
-    def get_relevant_data(self):
+    def get_relevant_data(self, brkr):
 
-        broker = BrokerAugust()
+        broker = brkr
 
         for row in self.old_list:
 
@@ -157,7 +131,7 @@ class ExcelWriter:
     """Writes a list of objects and their fields to an Excel file"""
     def __init__(self, list_obj):
         self.obj_list = list_obj.row_list
-        self.dest_filename = 'ICE_codes_output.xlsx'
+        self.dest_filename = 'hellooooooo.xlsx'
         self.sheetname = 'ICE Codes'
         self.wb = Workbook()
         self.ws = self.wb.active
