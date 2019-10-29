@@ -129,9 +129,9 @@ class TodaysDate:
 
 class ExcelWriter:
     """Writes a list of objects and their fields to an Excel file"""
-    def __init__(self, list_obj):
+    def __init__(self, list_obj, brkr_name):
         self.obj_list = list_obj.row_list
-        self.dest_filename = 'hellooooooo.xlsx'
+        self.dest_filename = f"{brkr_name}.xlsx"
         self.sheetname = 'ICE Codes'
         self.wb = Workbook()
         self.ws = self.wb.active

@@ -26,6 +26,7 @@ class MainWindow(QWidget):
         self.layout = QGridLayout()
         self.setLayout(self.layout)
         self.current_broker = BrokerAugust()
+        self.current_broker_name = 'August'
         self.welcome_label()
         self.radio_buttons()
         self.file_search()
@@ -69,7 +70,8 @@ class MainWindow(QWidget):
         radio_button = self.sender()
         if radio_button.isChecked():
             self.current_broker = radio_button.broker
-            print(self.current_broker)
+            self.current_broker_name = radio_button.text()
+            print(self.current_broker_name)
 
     def read_data(self):
         td = TodaysDate()
@@ -95,7 +97,7 @@ class MainWindow(QWidget):
             if row_obj.date_object >= today:
                 row_container.append_to_row_list(row_obj)
         # Write the data to Excel
-        writer = ExcelWriter(row_container)
+        writer = ExcelWriter(row_container, self.current_broker_name)
         writer.write_data()
 
         sys.exit()
